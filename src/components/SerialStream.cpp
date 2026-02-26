@@ -1,17 +1,23 @@
 #include "drivers/SerialStream.h"
 
-void SerialStream::begin(unsigned long baud) {
-    Serial.begin(baud);
+/* ---- IStream implementation for HW UART ------------------------------- */
+
+void SerialStream::begin(unsigned long baudRate)
+{
+    Serial.begin(baudRate);
 }
 
-void SerialStream::write(char c) {
-    Serial.write(c);
+void SerialStream::write(char ch)
+{
+    Serial.write(ch);
 }
 
-char SerialStream::read() {
-    return Serial.read();
+char SerialStream::read()
+{
+    return (char)Serial.read();
 }
 
-bool SerialStream::available() {
-    return Serial.available();
+bool SerialStream::available()
+{
+    return (Serial.available() > 0);
 }

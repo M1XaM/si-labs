@@ -1,6 +1,12 @@
-#pragma once
+#ifndef _LED_DRV_H_
+#define _LED_DRV_H_
+
 #include <Arduino.h>
 
-void InitializeLed(int pinNumber);
+/* Configure a single GPIO as digital output for an LED */
+void InitializeLed(int gpioPin);
 
-void SetLedState(int pinNumber, bool isTargetOn);
+/* Drive an LED on or off */
+void SetLedState(int gpioPin, bool turnOn);
+
+#endif /* _LED_DRV_H_ */

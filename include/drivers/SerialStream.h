@@ -1,13 +1,22 @@
-#pragma once
+#ifndef _SERIAL_STREAM_H_
+#define _SERIAL_STREAM_H_
 
-#include "interfaces/IStream.h"
 #include <Arduino.h>
+#include "interfaces/IStream.h"
 
-class SerialStream : public IStream {
+/*
+ * Thin wrapper that routes IStream traffic through
+ * the hardware UART (Serial).
+ */
+class SerialStream : public IStream
+{
 public:
-    void begin(unsigned long baud);
+    /* Open the UART at the requested speed */
+    void begin(unsigned long baudRate);
 
-    virtual void write(char c) override;
-    virtual char read() override;
-    virtual bool available() override;
+    void write(char ch)  override;
+    char read()          override;
+    bool available()     override;
 };
+
+#endif /* _SERIAL_STREAM_H_ */
