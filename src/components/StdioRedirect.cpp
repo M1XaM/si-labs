@@ -1,47 +1,39 @@
 #include "services/StdioRedirect.h"
-#include <Arduino.h>
 #include <stdio.h>
+#include <Arduino.h>
 
-/* ---- file-scope state -------------------------------------------------- */
-static IStream  *_ioTarget = nullptr;
-static FILE      _avrFile;
+static IStream* activeStream = nullptr;
+static FILE stdio_stream;
 
-/* ---- low-level callbacks for avr-libc ---------------------------------- */
+// Forward declarations
+static int stream_putchar(char c, FILE* f);
+static int stream_getchar(FILE* f);
 
-static int _charOut(char ch, FILE *fp)
-{
-    (void)fp;
-    if (_ioTarget == nullptr)
-        return 0;
+void initStdio(IStream* stream) {
+    activeStream = stream;
 
-    if (ch == '\n')
-        _ioTarget->write('\r');
+    fdev_setup_stream(&stdio_stream, stream_putchar, stream_getchar, _FDEV_SETUP_RW);
 
-    _ioTarget->write(ch);
+    stdout = &stdio_stream;
+    stdin  = &stdio_stream;
+}
+
+static int stream_putchar(char c, FILE* f) {
+    if (!activeStream) return 0;
+
+    if (c == '\n') {
+        activeStream->write('\r');
+    }
+
+    activeStream->write(c);
     return 0;
 }
 
-static int _charIn(FILE *fp)
-{
-    (void)fp;
-    if (_ioTarget == nullptr)
-        return 0;
+static int stream_getchar(FILE* f) {
+    if (!activeStream) return 0;
 
-    while (!_ioTarget->available())
-    {
-        /* busy-wait until data arrives */
+    while (!activeStream->available()) {
     }
-    return _ioTarget->read();
-}
 
-/* ---- public API -------------------------------------------------------- */
-
-void initStdio(IStream *ioChannel)
-{
-    _ioTarget = ioChannel;
-
-    fdev_setup_stream(&_avrFile, _charOut, _charIn, _FDEV_SETUP_RW);
-
-    stdout = &_avrFile;
-    stdin  = &_avrFile;
+    return activeStream->read();
 }

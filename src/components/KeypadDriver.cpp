@@ -1,75 +1,59 @@
 #include "drivers/KeypadDriver.h"
 
-/* ---- internal state ---------------------------------------------------- */
-static uint8_t  _rPins[KPAD_ROWS];
-static uint8_t  _cPins[KPAD_COLS];
-static char     _bufferedChar = '\0';
+static uint8_t StoredRowPins[KeypadRowCount];
+static uint8_t StoredColPins[KeypadColCount];
 
-/* 4x4 look-up table that maps (row, col) to the printed character */
-static const char _charTable[KPAD_ROWS][KPAD_COLS] = {
-    { '1', '2', '3', 'A' },
-    { '4', '5', '6', 'B' },
-    { '7', '8', '9', 'C' },
-    { '*', '0', '#', 'D' },
+static const char KeyMap[KeypadRowCount][KeypadColCount] = {
+    {'1', '2', '3', 'A'},
+    {'4', '5', '6', 'B'},
+    {'7', '8', '9', 'C'},
+    {'*', '0', '#', 'D'}
 };
 
-/* ---- public API -------------------------------------------------------- */
+static char PendingKey = '\0';
 
-void InitializeKeypad(const uint8_t rowPins[KPAD_ROWS],
-                      const uint8_t colPins[KPAD_COLS])
-{
-    uint8_t idx;
-
-    for (idx = 0; idx < KPAD_ROWS; ++idx) {
-        _rPins[idx] = rowPins[idx];
-        pinMode(rowPins[idx], OUTPUT);
-        digitalWrite(rowPins[idx], HIGH);
+void InitializeKeypad(const uint8_t rowPins[KeypadRowCount],
+                      const uint8_t colPins[KeypadColCount]) {
+    for (uint8_t r = 0; r < KeypadRowCount; r++) {
+        StoredRowPins[r] = rowPins[r];
+        pinMode(rowPins[r], OUTPUT);
+        digitalWrite(rowPins[r], HIGH);
     }
-
-    for (idx = 0; idx < KPAD_COLS; ++idx) {
-        _cPins[idx] = colPins[idx];
-        pinMode(colPins[idx], INPUT_PULLUP);
+    for (uint8_t c = 0; c < KeypadColCount; c++) {
+        StoredColPins[c] = colPins[c];
+        pinMode(colPins[c], INPUT_PULLUP);
     }
 }
 
-bool IsKeypadKeyAvailable()
-{
-    if (_bufferedChar != '\0')
-        return true;
+bool IsKeypadKeyAvailable() {
+    if (PendingKey != '\0') return true;
 
-    for (uint8_t row = 0; row < KPAD_ROWS; ++row)
-    {
-        digitalWrite(_rPins[row], LOW);
+    for (uint8_t r = 0; r < KeypadRowCount; r++) {
+        digitalWrite(StoredRowPins[r], LOW);
 
-        for (uint8_t col = 0; col < KPAD_COLS; ++col)
-        {
-            if (digitalRead(_cPins[col]) != LOW)
-                continue;
+        for (uint8_t c = 0; c < KeypadColCount; c++) {
+            if (digitalRead(StoredColPins[c]) == LOW) {
+                delay(KeypadDebounceMs);
 
-            delay(KPAD_DEBOUNCE);
+                if (digitalRead(StoredColPins[c]) == LOW) {
+                    PendingKey = KeyMap[r][c];
 
-            if (digitalRead(_cPins[col]) != LOW)
-                continue;
-
-            _bufferedChar = _charTable[row][col];
-
-            /* wait until the user lifts the finger */
-            while (digitalRead(_cPins[col]) == LOW) { /* spin */ }
-
-            delay(KPAD_RELEASE);
-            digitalWrite(_rPins[row], HIGH);
-            return true;
+                    while (digitalRead(StoredColPins[c]) == LOW) {
+                    }
+                    delay(KeypadReleaseMs);
+                    digitalWrite(StoredRowPins[r], HIGH);
+                    return true;
+                }
+            }
         }
 
-        digitalWrite(_rPins[row], HIGH);
+        digitalWrite(StoredRowPins[r], HIGH);
     }
-
     return false;
 }
 
-char ScanKeypad()
-{
-    char ch       = _bufferedChar;
-    _bufferedChar = '\0';
-    return ch;
+char ScanKeypad() {
+    char key = PendingKey;
+    PendingKey = '\0';
+    return key;
 }

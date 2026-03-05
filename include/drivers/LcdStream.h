@@ -1,19 +1,9 @@
-#ifndef _LCD_STREAM_H_
-#define _LCD_STREAM_H_
-
+#pragma once
 #include "interfaces/IStream.h"
 
-/*
- * Bridges the IStream interface to the LCD + keypad hardware.
- * write() -> LCD display
- * read()  -> 4x4 matrix keypad
- */
-class LcdStream : public IStream
-{
+class LcdStream : public IStream {
 public:
-    void write(char ch)  override;
-    char read()          override;
-    bool available()     override;
+    virtual void write(char c) override;
+    virtual char read()        override;
+    virtual bool available()   override;
 };
-
-#endif /* _LCD_STREAM_H_ */

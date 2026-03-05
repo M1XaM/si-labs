@@ -2,19 +2,14 @@
 #include "drivers/LcdDriver.h"
 #include "drivers/KeypadDriver.h"
 
-/* ---- IStream implementation for LCD + keypad --------------------------- */
-
-void LcdStream::write(char ch)
-{
-    LcdPrintChar(ch);
+void LcdStream::write(char c) {
+    LcdPrintChar(c);
 }
 
-char LcdStream::read()
-{
+char LcdStream::read() {
     return ScanKeypad();
 }
 
-bool LcdStream::available()
-{
+bool LcdStream::available() {
     return IsKeypadKeyAvailable();
 }

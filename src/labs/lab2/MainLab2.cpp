@@ -91,10 +91,10 @@ void SetupLab2()
                   SCREEN_W, SCREEN_H);
 
     /* --- keypad --- */
-    const uint8_t rp[KPAD_ROWS] = { PIN_KP_R0, PIN_KP_R1,
-                                     PIN_KP_R2, PIN_KP_R3 };
-    const uint8_t cp[KPAD_COLS] = { PIN_KP_C0, PIN_KP_C1,
-                                     PIN_KP_C2, PIN_KP_C3 };
+    const uint8_t rp[KeypadRowCount] = { PIN_KP_R0, PIN_KP_R1,
+                                          PIN_KP_R2, PIN_KP_R3 };
+    const uint8_t cp[KeypadColCount] = { PIN_KP_C0, PIN_KP_C1,
+                                          PIN_KP_C2, PIN_KP_C3 };
     InitializeKeypad(rp, cp);
 
     /* --- LEDs --- */
