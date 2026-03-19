@@ -6,9 +6,7 @@
 void TaskDisplayReport(void* pvParameters) {
     while (1) {
         if (xSemaphoreTake(g_sensorDataMutex, portMAX_DELAY)) {
-            uint32_t raw = g_sensorData.rawValue;
             float temp = g_sensorData.temperature;
-            bool isAlert = g_sensorData.isAlertActive;
             bool isStable = g_sensorData.isStableAlert;
             
             // AVR printf doesn't support %f by default, cast to int for display or use dtostrf
