@@ -1,0 +1,44 @@
+{
+  "version": 1,
+  "author": "GitHub Copilot",
+  "editor": "wokwi",
+  "parts": [
+    {
+      "type": "wokwi-arduino-uno",
+      "id": "uno",
+      "top": 0,
+      "left": 0,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-ntc-temperature-sensor",
+      "id": "ntc1",
+      "top": -50,
+      "left": 250,
+      "attrs": {}
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led1",
+      "top": -80,
+      "left": 100,
+      "attrs": { "color": "red" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "res1",
+      "top": -30,
+      "left": 100,
+      "attrs": { "value": "220" }
+    }
+  ],
+  "connections": [
+    ["ntc1:VCC", "uno:5V", "red", ["v0"]],
+    ["ntc1:GND", "uno:GND", "black", ["v0"]],
+    ["ntc1:OUT", "uno:A0", "green", ["v0"]],
+    ["led1:A", "res1:1", "red", ["v0"]],
+    ["led1:C", "uno:GND", "black", ["v0"]],
+    ["res1:2", "uno:11", "yellow", ["v0"]]
+  ],
+  "dependencies": {}
+}

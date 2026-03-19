@@ -1,12 +1,12 @@
 #include <Arduino.h>
 
-void SetupLab4();
-void LoopLab4();
+void SetupLab5();
+void LoopLab5();
 
 void setup() {
-    SetupLab4();
+    SetupLab5();
 }
 
 void loop() {
-    LoopLab4();
+    LoopLab5();
 }
