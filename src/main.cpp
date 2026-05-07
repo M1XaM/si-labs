@@ -1,11 +1,11 @@
 #include <Arduino.h>
 
-#include "labs/lab7/MainLab7.h"
+#include "labs/lab8/MainLab8.h"
 
 void setup() {
-    SetupLab7();
+    SetupLab8();
 }
 
 void loop() {
-    LoopLab7();
+    LoopLab8();
 }

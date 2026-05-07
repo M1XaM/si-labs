@@ -18,60 +18,53 @@
       "attrs": {}
     },
     {
-      "type": "wokwi-resistor",
-      "id": "r_relay",
-      "top": 220,
-      "left": 350,
-      "attrs": { "value": "220" }
-    },
-    {
-      "type": "wokwi-led",
-      "id": "led_relay",
-      "top": 180,
-      "left": 460,
-      "attrs": { "color": "blue", "label": "Relay" }
+      "type": "wokwi-servo",
+      "id": "servo1",
+      "top": 100,
+      "left": 400,
+      "attrs": {}
     },
     {
       "type": "wokwi-resistor",
       "id": "r_green",
-      "top": 320,
-      "left": 350,
+      "top": 420,
+      "left": 60,
       "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-led",
       "id": "led_green",
-      "top": 280,
-      "left": 460,
-      "attrs": { "color": "green", "label": "OFF / Safe" }
+      "top": 380,
+      "left": 170,
+      "attrs": { "color": "green", "label": "OK" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r_red",
-      "top": 320,
-      "left": 560,
+      "top": 420,
+      "left": 260,
       "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-led",
       "id": "led_red",
-      "top": 280,
-      "left": 670,
-      "attrs": { "color": "red", "label": "ON / Energised" }
+      "top": 380,
+      "left": 370,
+      "attrs": { "color": "red", "label": "Limit" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r_yellow",
       "top": 420,
-      "left": 350,
+      "left": 460,
       "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-led",
       "id": "led_yellow",
       "top": 380,
-      "left": 460,
-      "attrs": { "color": "yellow", "label": "Activity" }
+      "left": 570,
+      "attrs": { "color": "yellow", "label": "Conditioning" }
     }
   ],
   "connections": [
@@ -84,9 +77,9 @@
     ["kp1:C3", "mega1:A2", "orange", []],
     ["kp1:C4", "mega1:A3", "orange", []],
 
-    ["mega1:9", "r_relay:1", "blue", []],
-    ["r_relay:2", "led_relay:A", "blue", []],
-    ["led_relay:C", "mega1:GND.1", "black", []],
+    ["servo1:V+",  "mega1:5V",     "red",   []],
+    ["servo1:GND", "mega1:GND.1",  "black", []],
+    ["servo1:PWM", "mega1:9",      "blue",  []],
 
     ["mega1:12", "r_green:1", "green", []],
     ["r_green:2", "led_green:A", "green", []],
