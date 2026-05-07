@@ -43,7 +43,7 @@
       "id": "led_green",
       "top": 380,
       "left": 170,
-      "attrs": { "color": "green", "label": "OFF" }
+      "attrs": { "color": "green", "label": "In Band" }
     },
     {
       "type": "wokwi-resistor",
@@ -57,7 +57,7 @@
       "id": "led_red",
       "top": 380,
       "left": 370,
-      "attrs": { "color": "red", "label": "ON / Heat" }
+      "attrs": { "color": "red", "label": "Saturated" }
     },
     {
       "type": "wokwi-resistor",
@@ -71,7 +71,7 @@
       "id": "led_yellow",
       "top": 380,
       "left": 570,
-      "attrs": { "color": "yellow", "label": "Activity" }
+      "attrs": { "color": "yellow", "label": "PID tick" }
     }
   ],
   "connections": [
