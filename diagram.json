@@ -1,44 +1,103 @@
 {
   "version": 1,
-  "author": "GitHub Copilot",
+  "author": "silab",
   "editor": "wokwi",
   "parts": [
     {
-      "type": "wokwi-arduino-uno",
-      "id": "uno",
+      "type": "wokwi-arduino-mega",
+      "id": "mega1",
       "top": 0,
       "left": 0,
       "attrs": {}
     },
     {
-      "type": "wokwi-ntc-temperature-sensor",
-      "id": "ntc1",
-      "top": -50,
-      "left": 250,
+      "type": "wokwi-membrane-keypad",
+      "id": "kp1",
+      "top": 200,
+      "left": -180,
       "attrs": {}
     },
     {
+      "type": "wokwi-resistor",
+      "id": "r_relay",
+      "top": 220,
+      "left": 350,
+      "attrs": { "value": "220" }
+    },
+    {
       "type": "wokwi-led",
-      "id": "led1",
-      "top": -80,
-      "left": 100,
-      "attrs": { "color": "red" }
+      "id": "led_relay",
+      "top": 180,
+      "left": 460,
+      "attrs": { "color": "blue", "label": "Relay" }
     },
     {
       "type": "wokwi-resistor",
-      "id": "res1",
-      "top": -30,
-      "left": 100,
+      "id": "r_green",
+      "top": 320,
+      "left": 350,
       "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_green",
+      "top": 280,
+      "left": 460,
+      "attrs": { "color": "green", "label": "OFF / Safe" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_red",
+      "top": 320,
+      "left": 560,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_red",
+      "top": 280,
+      "left": 670,
+      "attrs": { "color": "red", "label": "ON / Energised" }
+    },
+    {
+      "type": "wokwi-resistor",
+      "id": "r_yellow",
+      "top": 420,
+      "left": 350,
+      "attrs": { "value": "220" }
+    },
+    {
+      "type": "wokwi-led",
+      "id": "led_yellow",
+      "top": 380,
+      "left": 460,
+      "attrs": { "color": "yellow", "label": "Activity" }
     }
   ],
   "connections": [
-    ["ntc1:VCC", "uno:5V", "red", ["v0"]],
-    ["ntc1:GND", "uno:GND", "black", ["v0"]],
-    ["ntc1:OUT", "uno:A0", "green", ["v0"]],
-    ["led1:A", "res1:1", "red", ["v0"]],
-    ["led1:C", "uno:GND", "black", ["v0"]],
-    ["res1:2", "uno:11", "yellow", ["v0"]]
-  ],
-  "dependencies": {}
+    ["kp1:R1", "mega1:2", "purple", []],
+    ["kp1:R2", "mega1:3", "purple", []],
+    ["kp1:R3", "mega1:4", "purple", []],
+    ["kp1:R4", "mega1:5", "purple", []],
+    ["kp1:C1", "mega1:A0", "orange", []],
+    ["kp1:C2", "mega1:A1", "orange", []],
+    ["kp1:C3", "mega1:A2", "orange", []],
+    ["kp1:C4", "mega1:A3", "orange", []],
+
+    ["mega1:9", "r_relay:1", "blue", []],
+    ["r_relay:2", "led_relay:A", "blue", []],
+    ["led_relay:C", "mega1:GND.1", "black", []],
+
+    ["mega1:12", "r_green:1", "green", []],
+    ["r_green:2", "led_green:A", "green", []],
+    ["led_green:C", "mega1:GND.2", "black", []],
+
+    ["mega1:11", "r_red:1", "red", []],
+    ["r_red:2", "led_red:A", "red", []],
+    ["led_red:C", "mega1:GND.3", "black", []],
+
+    ["mega1:10", "r_yellow:1", "#FFD600", []],
+    ["r_yellow:2", "led_yellow:A", "#FFD600", []],
+    ["led_yellow:C", "mega1:GND.4", "black", []]
+  ]
 }
