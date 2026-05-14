@@ -11,97 +11,51 @@
       "attrs": {}
     },
     {
-      "type": "wokwi-ntc-temperature-sensor",
-      "id": "ntc1",
-      "top": 280,
-      "left": 60,
-      "attrs": { "beta": "3950" }
-    },
-    {
-      "type": "wokwi-membrane-keypad",
-      "id": "kp1",
-      "top": 200,
-      "left": -200,
-      "attrs": {}
-    },
-    {
-      "type": "wokwi-servo",
-      "id": "servo1",
-      "top": 80,
-      "left": 400,
-      "attrs": {}
+      "type": "wokwi-pushbutton",
+      "id": "btn1",
+      "top": 250,
+      "left": -60,
+      "attrs": { "color": "blue", "label": "Toggle" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r_green",
-      "top": 420,
-      "left": 60,
+      "top": 310,
+      "left": 280,
       "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-led",
       "id": "led_green",
-      "top": 380,
-      "left": 170,
-      "attrs": { "color": "green", "label": "In Band" }
+      "top": 250,
+      "left": 280,
+      "attrs": { "color": "green", "label": "State OFF" }
     },
     {
       "type": "wokwi-resistor",
       "id": "r_red",
-      "top": 420,
-      "left": 260,
+      "top": 310,
+      "left": 400,
       "attrs": { "value": "220" }
     },
     {
       "type": "wokwi-led",
       "id": "led_red",
-      "top": 380,
-      "left": 370,
-      "attrs": { "color": "red", "label": "Saturated" }
-    },
-    {
-      "type": "wokwi-resistor",
-      "id": "r_yellow",
-      "top": 420,
-      "left": 460,
-      "attrs": { "value": "220" }
-    },
-    {
-      "type": "wokwi-led",
-      "id": "led_yellow",
-      "top": 380,
-      "left": 570,
-      "attrs": { "color": "yellow", "label": "PID tick" }
+      "top": 250,
+      "left": 400,
+      "attrs": { "color": "red", "label": "State ON" }
     }
   ],
   "connections": [
-    ["ntc1:VCC", "mega1:5V",    "red",   []],
-    ["ntc1:GND", "mega1:GND.1", "black", []],
-    ["ntc1:OUT", "mega1:A0",    "green", []],
-
-    ["kp1:R1", "mega1:2",  "purple", []],
-    ["kp1:R2", "mega1:3",  "purple", []],
-    ["kp1:R3", "mega1:4",  "purple", []],
-    ["kp1:R4", "mega1:5",  "purple", []],
-    ["kp1:C1", "mega1:A1", "orange", []],
-    ["kp1:C2", "mega1:A2", "orange", []],
-    ["kp1:C3", "mega1:A3", "orange", []],
-    ["kp1:C4", "mega1:A4", "orange", []],
-
-    ["servo1:V+",  "mega1:5V",    "red",   []],
-    ["servo1:GND", "mega1:GND.2", "black", []],
-    ["servo1:PWM", "mega1:9",     "blue",  []],
+    ["btn1:1.l", "mega1:2",     "purple", []],
+    ["btn1:2.r", "mega1:GND.1", "black",  []],
 
     ["mega1:12", "r_green:1", "green", []],
     ["r_green:2", "led_green:A", "green", []],
-    ["led_green:C", "mega1:GND.3", "black", []],
+    ["led_green:C", "mega1:GND.2", "black", []],
 
     ["mega1:11", "r_red:1", "red", []],
     ["r_red:2", "led_red:A", "red", []],
-    ["led_red:C", "mega1:GND.4", "black", []],
-
-    ["mega1:10", "r_yellow:1", "#FFD600", []],
-    ["r_yellow:2", "led_yellow:A", "#FFD600", []],
-    ["led_yellow:C", "mega1:GND.5", "black", []]
+    ["led_red:C", "mega1:GND.3", "black", []]
   ]
 }
